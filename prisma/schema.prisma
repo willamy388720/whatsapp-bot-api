@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  password_hash String
+  email         String   @unique
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Contact {
+  id                  String              @id @default(uuid())
+  name                String?
+  phone_number        String              @unique
+  photo_url           String?
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  suspicious_messages SuspiciousMessage[]
+
+  @@map("contacts")
+}
+
+model SuspiciousMessage {
+  id         String   @id @default(uuid())
+  message    String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  contact    Contact? @relation(fields: [contact_id], references: [id])
+  contact_id String?
+
+  @@map("suspicious_messages")
+}
+
+model Keyword {
+  id         String   @id @default(uuid())
+  word       String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("keywords")
+}

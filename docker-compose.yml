@@ -1,0 +1,11 @@
+version: "1"
+
+services:
+  whatsapp-bot-api:
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=whatsappbot
+      - POSTGRESQL_DATABASE=whatsappbotdb
