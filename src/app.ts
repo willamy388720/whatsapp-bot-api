@@ -5,6 +5,9 @@ import cors from "@fastify/cors";
 import { ZodError } from "zod";
 
 import { env } from "./env";
+import { contactRoutes } from "./controllers/contacts/routes";
+import { keywordRoutes } from "./controllers/keywords/routes";
+import { suspiciousMessageRoutes } from "./controllers/suspicious-messages/routes";
 
 export const app = fastify();
 
@@ -24,6 +27,10 @@ app.register(fastifyJwt, {
 });
 
 app.register(fastifyCookie);
+
+app.register(contactRoutes);
+app.register(keywordRoutes);
+app.register(suspiciousMessageRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

@@ -47,7 +47,11 @@ export class PrismaContactsRepository implements ContactsRepository {
       where: {
         id: data.id,
       },
-      data,
+      data: {
+        name: data.name,
+        phone_number: data.phone_number,
+        photo_url: data.photo_url,
+      },
     });
 
     return contact;

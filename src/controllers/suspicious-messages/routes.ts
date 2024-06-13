@@ -1,12 +1,14 @@
 import { app } from "@/app";
-import { create } from "domain";
+import { create } from "./create";
 import { fetchSuspiciousMessages } from "./fetch-suspicious-messages";
 import { destroy } from "./destroy";
+import { catchSuspiciousMessage } from "./catch-suspicious-messages";
 
-export async function contactRoutes() {
-  app.post("/contacts", create);
+export async function suspiciousMessageRoutes() {
+  app.post("/suspicious_messages", create);
+  app.post("/suspicious_messages/catch", catchSuspiciousMessage);
 
-  app.get("/contacts", fetchSuspiciousMessages);
+  app.get("/suspicious_messages", fetchSuspiciousMessages);
 
-  app.delete("/contacts/:id", destroy);
+  app.delete("/suspicious_messages/:id", destroy);
 }
