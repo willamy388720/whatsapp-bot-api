@@ -8,23 +8,17 @@ export async function catchSuspiciousMessage(
 ) {
   const catchSchema = z.object({
     message: z.string(),
-    name: z.string().optional().nullable().default(null),
-    photo_url: z.string().optional().nullable().default(null),
     phone_number: z.string().optional().nullable().default(null),
   });
 
-  const { message, name, phone_number, photo_url } = catchSchema.parse(
-    request.body
-  );
+  const { message, phone_number } = catchSchema.parse(request.body);
 
   try {
     const catchSuspiciousMessageService = makeCatchSuspiciousMessageService();
 
     const { scamDetected } = await catchSuspiciousMessageService.execute({
       message,
-      name,
       phoneNumber: phone_number,
-      photoUrl: photo_url,
     });
 
     return reply.status(201).send({ scam_detected: scamDetected });

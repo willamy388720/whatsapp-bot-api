@@ -7,8 +7,6 @@ import { areSimilar } from "@/utils/services/theyAreSimilar";
 interface CatchSuspiciousMessageServiceRequest {
   message: string;
   phoneNumber: string | null;
-  name: string | null;
-  photoUrl: string | null;
 }
 
 interface CatchSuspiciousMessageServiceResponse {
@@ -25,8 +23,6 @@ export class CatchSuspiciousMessageService {
   async execute({
     message,
     phoneNumber,
-    name,
-    photoUrl,
   }: CatchSuspiciousMessageServiceRequest): Promise<CatchSuspiciousMessageServiceResponse> {
     let scamDetected = false;
 
@@ -67,20 +63,6 @@ export class CatchSuspiciousMessageService {
 
       if (containsScamWords(messageLowCase, keywords)) {
         scamDetected = true;
-      }
-    }
-
-    if (phoneNumber && scamDetected) {
-      const contact = await this.contactsRepository.findByPhoneNumber(
-        phoneNumber
-      );
-
-      if (!contact) {
-        await this.contactsRepository.create({
-          name,
-          phone_number: phoneNumber,
-          photo_url: photoUrl,
-        });
       }
     }
 

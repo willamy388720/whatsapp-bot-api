@@ -1,7 +1,5 @@
-import { SuspiciousMessageAlreadyExistsError } from "@/errors/suspicious-message-already-exists-error";
 import { ContactsRepository } from "@/repositories/contacts-repository";
 import { SuspiciousMessagesRepository } from "@/repositories/suspicious-messages-repository";
-import { areSimilar } from "@/utils/services/theyAreSimilar";
 import { SuspiciousMessage } from "@prisma/client";
 
 interface CreateSuspiciousMessageServiceRequest {
@@ -53,23 +51,14 @@ export class CreateSuspiciousMessageService {
       await this.suspiciousMessagesRepository.findByMessage(messageLowCase);
 
     if (suspiciousMessageAlreadyExists) {
-      throw new SuspiciousMessageAlreadyExistsError();
+      return { suspiciousMessage: suspiciousMessageAlreadyExists };
+    } else {
+      const suspiciousMessage = await this.suspiciousMessagesRepository.create({
+        message: messageLowCase,
+        contact_id: contactId,
+      });
+
+      return { suspiciousMessage };
     }
-
-    const suspiciousMessages =
-      await this.suspiciousMessagesRepository.findAllSuspiciousMessages();
-
-    suspiciousMessages.forEach((suspicious) => {
-      if (areSimilar(suspicious.message, messageLowCase)) {
-        throw new SuspiciousMessageAlreadyExistsError();
-      }
-    });
-
-    const suspiciousMessage = await this.suspiciousMessagesRepository.create({
-      message: messageLowCase,
-      contact_id: contactId,
-    });
-
-    return { suspiciousMessage };
   }
 }
