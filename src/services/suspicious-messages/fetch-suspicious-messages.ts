@@ -4,7 +4,7 @@ import { SuspiciousMessage } from "@prisma/client";
 interface FetchSuspiciousMessagesServiceRequest {}
 
 interface FetchSuspiciousMessagesServiceResponse {
-  suspiciousmessages: SuspiciousMessage[];
+  suspicious_messages: SuspiciousMessage[];
 }
 
 export class FetchSuspiciousMessagesService {
@@ -13,10 +13,10 @@ export class FetchSuspiciousMessagesService {
   ) {}
 
   async execute({}: FetchSuspiciousMessagesServiceRequest): Promise<FetchSuspiciousMessagesServiceResponse> {
-    let suspiciousmessages: SuspiciousMessage[] = [];
+    let suspicious_messages: SuspiciousMessage[] = [];
 
-    suspiciousmessages =
+    suspicious_messages =
       await this.suspiciousmessagesRepository.findAllSuspiciousMessages();
-    return { suspiciousmessages };
+    return { suspicious_messages };
   }
 }

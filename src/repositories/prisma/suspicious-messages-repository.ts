@@ -30,6 +30,9 @@ export class PrismaSuspiciousMessagesRepository
 
   async findAllSuspiciousMessages() {
     const suspiciousMessages = await prisma.suspiciousMessage.findMany({
+      orderBy: {
+        number_of_times_used: "desc",
+      },
       include: {
         contact: true,
       },

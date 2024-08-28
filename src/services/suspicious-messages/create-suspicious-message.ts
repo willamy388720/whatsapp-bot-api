@@ -3,6 +3,7 @@ import { SuspiciousMessagesRepository } from "@/repositories/suspicious-messages
 import { SuspiciousMessage } from "@prisma/client";
 
 interface CreateSuspiciousMessageServiceRequest {
+  userId?: string;
   message: string;
   phoneNumber: string | null;
   name: string | null;
@@ -20,6 +21,7 @@ export class CreateSuspiciousMessageService {
   ) {}
 
   async execute({
+    userId,
     message,
     phoneNumber,
     name,
@@ -39,6 +41,7 @@ export class CreateSuspiciousMessageService {
           name,
           phone_number: phoneNumber,
           photo_url: photoUrl,
+          user_id: userId,
         });
 
         contactId = newContact.id;
@@ -56,6 +59,7 @@ export class CreateSuspiciousMessageService {
       const suspiciousMessage = await this.suspiciousMessagesRepository.create({
         message: messageLowCase,
         contact_id: contactId,
+        number_of_times_used: 1,
       });
 
       return { suspiciousMessage };

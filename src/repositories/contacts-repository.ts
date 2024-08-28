@@ -6,5 +6,6 @@ export interface ContactsRepository {
   findById(id: string): Promise<Contact | null>;
   findByPhoneNumber(phoneNumber: string): Promise<Contact | null>;
   findAllContacts(): Promise<Contact[]>;
+  findAllContactsByUserId(userId: string): Promise<Contact[]>;
   destroy(data: Contact): Promise<void>;
 }

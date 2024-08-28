@@ -9,11 +9,10 @@ export async function fetchSuspiciousMessages(
   try {
     const fetchSuspiciousMessagesService = makeFetchSuspiciousMessagesService();
 
-    const { suspiciousmessages } = await fetchSuspiciousMessagesService.execute(
-      {}
-    );
+    const { suspicious_messages } =
+      await fetchSuspiciousMessagesService.execute({});
 
-    return reply.status(200).send({ suspiciousmessages });
+    return reply.status(200).send({ suspicious_messages });
   } catch (error) {
     if (error instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: error.message });

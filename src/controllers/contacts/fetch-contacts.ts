@@ -9,7 +9,9 @@ export async function fetchContacts(
   try {
     const fetchContactsService = makeFetchContactsService();
 
-    const { contacts } = await fetchContactsService.execute({});
+    const { contacts } = await fetchContactsService.execute({
+      userId: request.user.sub,
+    });
 
     return reply.status(200).send({ contacts });
   } catch (error) {

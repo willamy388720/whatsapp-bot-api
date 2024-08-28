@@ -14,12 +14,15 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
+  phone_number  String
   password_hash String
-  email         String   @unique
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  photo_url     String
+  email         String    @unique
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  Contact       Contact[]
 
   @@map("users")
 }
@@ -32,15 +35,18 @@ model Contact {
   created_at          DateTime            @default(now())
   updated_at          DateTime            @updatedAt
   suspicious_messages SuspiciousMessage[]
+  user                User?               @relation(fields: [user_id], references: [id])
+  user_id             String?
 
   @@map("contacts")
 }
 
 model SuspiciousMessage {
-  id         String   @id @default(uuid())
-  message    String   @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id                   String   @id @default(uuid())
+  message              String   @unique
+  number_of_times_used Int?
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
 
   contact    Contact? @relation(fields: [contact_id], references: [id])
   contact_id String?

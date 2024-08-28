@@ -26,6 +26,19 @@ export class PrismaContactsRepository implements ContactsRepository {
     return contacts;
   }
 
+  async findAllContactsByUserId(userId: string) {
+    const contacts = await prisma.contact.findMany({
+      where: {
+        user_id: userId,
+      },
+      include: {
+        suspicious_messages: true,
+      },
+    });
+
+    return contacts;
+  }
+
   async findByPhoneNumber(phoneNumber: string) {
     const contact = await prisma.contact.findUnique({
       where: {

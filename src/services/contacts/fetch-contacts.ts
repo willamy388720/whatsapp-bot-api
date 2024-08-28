@@ -2,7 +2,9 @@ import { ResourceNotFoundError } from "@/errors/resource-not-found-error";
 import { ContactsRepository } from "@/repositories/contacts-repository";
 import { Contact } from "@prisma/client";
 
-interface FetchContactsServiceRequest {}
+interface FetchContactsServiceRequest {
+  userId: string;
+}
 
 interface FetchContactsServiceResponse {
   contacts: Contact[];
@@ -11,10 +13,12 @@ interface FetchContactsServiceResponse {
 export class FetchContactsService {
   constructor(private contactsRepository: ContactsRepository) {}
 
-  async execute({}: FetchContactsServiceRequest): Promise<FetchContactsServiceResponse> {
+  async execute({
+    userId,
+  }: FetchContactsServiceRequest): Promise<FetchContactsServiceResponse> {
     let contacts: Contact[] = [];
 
-    contacts = await this.contactsRepository.findAllContacts();
+    contacts = await this.contactsRepository.findAllContactsByUserId(userId);
     return { contacts };
   }
 }

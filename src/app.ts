@@ -8,6 +8,8 @@ import { env } from "./env";
 import { contactRoutes } from "./controllers/contacts/routes";
 import { keywordRoutes } from "./controllers/keywords/routes";
 import { suspiciousMessageRoutes } from "./controllers/suspicious-messages/routes";
+import { userRoutes } from "./controllers/users/routes";
+import { botRoutes } from "./controllers/bot/routes";
 
 export const app = fastify();
 
@@ -31,6 +33,8 @@ app.register(fastifyCookie);
 app.register(contactRoutes);
 app.register(keywordRoutes);
 app.register(suspiciousMessageRoutes);
+app.register(userRoutes);
+app.register(botRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

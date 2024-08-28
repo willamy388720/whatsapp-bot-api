@@ -51,6 +51,13 @@ export class CatchSuspiciousMessageService {
 
       suspiciousMessages.forEach((suspicious) => {
         if (areSimilar(suspicious.message, messageLowCase)) {
+          if (suspicious.number_of_times_used) {
+            suspicious.number_of_times_used += 1;
+          } else {
+            suspicious.number_of_times_used = 1;
+          }
+
+          this.suspiciousMessagesRepository.save(suspicious);
           scamDetected = true;
         }
       });

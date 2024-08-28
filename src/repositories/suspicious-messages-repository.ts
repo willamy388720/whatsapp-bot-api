@@ -8,4 +8,5 @@ export interface SuspiciousMessagesRepository {
   findByMessage(word: string): Promise<SuspiciousMessage | null>;
   findAllSuspiciousMessages(): Promise<SuspiciousMessage[]>;
   destroy(data: SuspiciousMessage): Promise<void>;
+  save(data: SuspiciousMessage): Promise<SuspiciousMessage>;
 }
