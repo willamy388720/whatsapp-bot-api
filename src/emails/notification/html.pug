@@ -1,0 +1,15 @@
+h1 Prezado(a) #{name},
+p.
+    Gostaríamos de alertá-lo(a) que o número #{phoneNumber} está enviando mensagens fraudulentas#{groupMessage}, com a intenção de aplicar golpes. Pedimos que, por favor, tome as seguintes medidas de segurança:
+ul
+    li Bloqueie o número: Evite qualquer contato com o número em questão.
+    li Não responda: Não forneça nenhuma informação pessoal ou financeira.
+    li Avise os outros: Informe os demais integrantes do grupo para que também tomem precauções.
+    li Reporte: Caso tenha recebido mensagens suspeitas, reporte para que possamos tomar as devidas providências.
+
+p A sua segurança é nossa prioridade. Agradecemos pela atenção e colaboração.
+br
+p Deseja salvar o contato na nossa lista Negra?
+a(href=`http://localhost:5173/positiveDecision/${paramsURL}`) SIM
+br
+a(href=`http://localhost:5173/negativeDecision/${maliciousPhoneNumber}`) NÃO

@@ -16,6 +16,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     const createContactService = makeCreateContactService();
 
     const { contact } = await createContactService.execute({
+      userId: request.user.sub,
       name,
       phoneNumber: phone_number,
       photoUrl: photo_url,

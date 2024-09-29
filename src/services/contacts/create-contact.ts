@@ -3,6 +3,7 @@ import { ContactsRepository } from "@/repositories/contacts-repository";
 import { Contact } from "@prisma/client";
 
 interface CreateContactServiceRequest {
+  userId: string;
   name: string | null;
   phoneNumber: string;
   photoUrl: string | null;
@@ -16,6 +17,7 @@ export class CreateContactService {
   constructor(private contactsRepository: ContactsRepository) {}
 
   async execute({
+    userId,
     name,
     phoneNumber,
     photoUrl,
@@ -28,6 +30,7 @@ export class CreateContactService {
     }
 
     const contact = await this.contactsRepository.create({
+      user_id: userId,
       name: name,
       phone_number: phoneNumber,
       photo_url: photoUrl,
